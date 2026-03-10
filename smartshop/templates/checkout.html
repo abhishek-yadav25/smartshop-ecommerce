@@ -1,0 +1,128 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="container mt-4">
+<div class="row">
+
+<!-- Order Summary -->
+<div class="col-md-5">
+
+<div class="card shadow">
+<div class="card-header bg-dark text-white">
+<h4>Order Summary</h4>
+</div>
+
+<div class="card-body">
+<h5>Total Amount</h5>
+<h3 class="text-success">₹{{ total }}</h3>
+</div>
+
+</div>
+</div>
+
+
+<!-- Checkout Section -->
+<div class="col-md-7">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+<h4>Checkout</h4>
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+{% csrf_token %}
+
+<input type="hidden" name="payment_method" id="paymentMethod">
+
+<h5>Select Payment Method</h5>
+<div class="form-check">
+<input class="form-check-input" type="radio" name="pay" onchange="showAddress('cod')">
+<label class="form-check-label">Cash on Delivery</label>
+</div>
+
+<div class="form-check">
+<input class="form-check-input" type="radio" name="pay" onchange="showAddress('upi')">
+<label class="form-check-label">UPI / Card</label>
+</div>
+
+
+
+<!-- Address Section -->
+<div id="addressSection" style="display:none;">
+
+<h5>Delivery Address</h5>
+
+<input type="text" name="name" class="form-control mb-2" placeholder="Full Name" required>
+
+<input type="email" name="email" class="form-control mb-2" placeholder="Email Address" required>
+
+<input type="text" name="phone" class="form-control mb-2" placeholder="Phone Number" required>
+
+<textarea name="address" class="form-control mb-2" placeholder="Full Address" required></textarea>
+
+<input type="text" name="city" class="form-control mb-2" placeholder="City" required>
+
+<input type="text" name="pincode" class="form-control mb-3" placeholder="Pincode" required>
+
+
+<!-- COD Button -->
+<button id="codButton" class="btn btn-success w-100 btn-lg" style="display:none;">
+Place Order
+</button>
+
+<!-- UPI Button -->
+<button type="button" id="upiButton" class="btn btn-warning w-100 btn-lg mt-2" style="display:none;">
+Pay Now
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+{% if payment %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+var options = {
+"key": "{{ key }}",
+"amount": "{{ payment.amount }}",
+"currency": "INR",
+"name": "SmartShop",
+"description": "Order Payment",
+"order_id": "{{ payment.id }}",
+
+"handler": function (response){
+alert("Payment Successful!");
+window.location.href="/";
+}
+
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById("upiButton").onclick = function(e){
+rzp.open();
+e.preventDefault();
+}
+
+</script>
+{% endif %}
+
+{% endblock %}

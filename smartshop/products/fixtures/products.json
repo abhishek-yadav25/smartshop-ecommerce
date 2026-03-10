@@ -1,0 +1,42 @@
+[
+{
+  "model": "products.product",
+  "pk": 1,
+  "fields": {
+    "name": "Nike Running Shoes",
+    "price": 2999,
+    "description": "Comfortable running shoes",
+    "image": "products/shoes.jpg"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 2,
+  "fields": {
+    "name": "Apple AirPods",
+    "price": 12999,
+    "description": "Wireless earbuds",
+    "image": "products/airpods.jpg"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "name": "Samsung Smart Watch",
+    "price": 8999,
+    "description": "Fitness smartwatch",
+    "image": "products/watch.jpg"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "name": "HP Laptop",
+    "price": 55999,
+    "description": "Powerful laptop",
+    "image": "products/laptop.jpg"
+  }
+}
+]

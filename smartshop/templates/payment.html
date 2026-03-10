@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout</title>
+
+<script>
+function showCOD(){
+    document.getElementById("cod").style.display="block";
+    document.getElementById("online").style.display="none";
+}
+
+function showOnline(){
+    document.getElementById("online").style.display="block";
+    document.getElementById("cod").style.display="none";
+}
+
+function paymentSuccess(){
+    alert("Payment Successful");
+    window.location.href="/success/";
+}
+</script>
+
+</head>
+
+<body>
+
+<h2>Checkout</h2>
+
+<h3>Select Payment Method</h3>
+
+<input type="radio" name="pay" onclick="showCOD()"> Cash on Delivery
+<br>
+
+<input type="radio" name="pay" onclick="showOnline()"> Online Payment
+
+<br><br>
+
+<!-- COD SECTION -->
+
+<div id="cod" style="display:none;">
+
+<h3>Delivery Address</h3>
+
+<form action="/place-order/" method="post">
+{% csrf_token %}
+
+<input type="text" name="name" placeholder="Full Name" required><br><br>
+
+<input type="text" name="phone" placeholder="Phone Number" required><br><br>
+
+<input type="text" name="address" placeholder="Address" required><br><br>
+
+<input type="text" name="city" placeholder="City" required><br><br>
+
+<input type="text" name="pincode" placeholder="Pincode" required><br><br>
+
+<input type="hidden" name="payment" value="Cash on Delivery">
+
+<button type="submit">Place Order</button>
+
+</form>
+
+</div>
+
+<!-- ONLINE PAYMENT SECTION -->
+
+<div id="online" style="display:none;">
+
+<h3>Scan QR to Pay</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPI-PAYMENT" />
+
+<br><br>
+
+<button onclick="paymentSuccess()">I Have Paid</button>
+
+</div>
+
+</body>
+</html>
